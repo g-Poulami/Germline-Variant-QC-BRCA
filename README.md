@@ -1,3 +1,8 @@
+![Pipeline Status](https://img.shields.io/badge/Pipeline-Passing-success)
+![QC Status](https://img.shields.io/badge/QC-Verified-success)
+![Platform](https://img.shields.io/badge/Snakemake-v7.x-blue)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
 # Germline-Variant-QC-BRCA
 
 This repository contains a reproducible Snakemake pipeline for Quality Control (QC) and population stratification (PCA) of germline variants in Breast Cancer (BRCA).
