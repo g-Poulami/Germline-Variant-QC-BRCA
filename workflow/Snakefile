@@ -3,7 +3,9 @@ configfile: "config/config.yaml"
 rule all:
     input:
         "results/pca_plot.png",
-        "results/association_results.log"
+        "results/association_results.log",
+        "results/manhattan_plot.png",
+        "results/qq_plot.png"
 
 rule vcf_to_plink:
     input: "data/raw_variants.vcf"
@@ -16,7 +18,9 @@ rule quality_control:
     output: "data/qc_passed.bed"
     shell:
         """
-        plink --bfile data/binary               --maf 0.05 --geno 0.02 --hwe 1e-6               --make-bed --out data/qc_passed
+        plink --bfile data/binary \
+              --maf 0.05 --geno 0.02 --hwe 1e-6 \
+              --make-bed --out data/qc_passed
         """
 
 rule pca:
@@ -29,13 +33,25 @@ rule pca:
         """
 
 rule association:
-    input: "data/qc_passed.bed"
-    output: "results/association_results.log" # Use the log as the "success" marker
+    input: 
+        bed = "data/qc_passed.bed",
+        pheno = "data/phenotypes.txt"
+    output: 
+        results = "results/association_results.assoc.logistic",
+        log = "results/association_results.log"
     shell:
-        "plink --bfile data/qc_passed --logistic --allow-no-sex --out results/association_results"
+        "plink --bfile data/qc_passed --pheno {input.pheno} --logistic --allow-no-sex --out results/association_results"
 
 rule plot_pca:
     input: "results/pca.eigenvec"
     output: "results/pca_plot.png"
     shell:
         "Rscript workflow/scripts/plot_pca.R"
+
+rule plot_gwas:
+    input: "results/association_results.assoc.logistic"
+    output:
+        manhattan = "results/manhattan_plot.png",
+        qq = "results/qq_plot.png"
+    shell:
+        "Rscript workflow/scripts/plot_gwas.R"
