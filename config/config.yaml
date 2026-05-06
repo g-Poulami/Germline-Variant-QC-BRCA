@@ -1,0 +1,3 @@
+# Configuration for Germline-Variant-QC-BRCA pipeline
+vcf_input: "data/raw_variants.vcf"
+project_name: "BRCA_Germline"

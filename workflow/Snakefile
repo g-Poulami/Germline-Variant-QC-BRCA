@@ -1,0 +1,41 @@
+configfile: "config/config.yaml"
+
+rule all:
+    input:
+        "results/pca_plot.png",
+        "results/association_results.log"
+
+rule vcf_to_plink:
+    input: "data/raw_variants.vcf"
+    output: "data/binary.bed"
+    shell:
+        "plink --vcf {input} --make-bed --out data/binary"
+
+rule quality_control:
+    input: "data/binary.bed"
+    output: "data/qc_passed.bed"
+    shell:
+        """
+        plink --bfile data/binary               --maf 0.05 --geno 0.02 --hwe 1e-6               --make-bed --out data/qc_passed
+        """
+
+rule pca:
+    input: "data/qc_passed.bed"
+    output: "results/pca.eigenvec"
+    shell:
+        """
+        plink --bfile data/qc_passed --indep-pairwise 50 5 0.2 --out data/pruned
+        plink --bfile data/qc_passed --extract data/pruned.prune.in --pca --out results/pca
+        """
+
+rule association:
+    input: "data/qc_passed.bed"
+    output: "results/association_results.log" # Use the log as the "success" marker
+    shell:
+        "plink --bfile data/qc_passed --logistic --allow-no-sex --out results/association_results"
+
+rule plot_pca:
+    input: "results/pca.eigenvec"
+    output: "results/pca_plot.png"
+    shell:
+        "Rscript workflow/scripts/plot_pca.R"
