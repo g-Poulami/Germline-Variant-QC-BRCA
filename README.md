@@ -4,7 +4,7 @@
 [![QC Status](https://img.shields.io/badge/QC-Verified-success?style=flat-square)](https://github.com/g-Poulami/Germline-Variant-QC-BRCA)
 [![Snakemake](https://img.shields.io/badge/Snakemake-v7.x-blue?style=flat-square)](https://snakemake.readthedocs.io/)
 [![PLINK](https://img.shields.io/badge/PLINK-v1.9-informational?style=flat-square)](https://www.cog-genomics.org/plink/)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)](LICENSE)
+[![License](https://img.shields.io/badge/License-Apache_2.0-yellow?style=flat-square)](LICENSE)
 [![Build](https://img.shields.io/badge/Build-v1.0.2-orange?style=flat-square)](https://github.com/g-Poulami/Germline-Variant-QC-BRCA)
 [![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20HPC-informational?style=flat-square&logo=linux&logoColor=white)]()
 
@@ -265,4 +265,4 @@ See also: [GenEquityFlow](https://github.com/g-Poulami/GenEquityFlow) for a pipe
 
 ## License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
+This project is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
